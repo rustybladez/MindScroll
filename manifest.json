@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "MindScroll - Facebook Time Manager",
+  "version": "1.0",
+  "description": "Helps you stay focused by reminding you to stop mindless scrolling on Facebook",
+
+  "permissions": ["storage", "activeTab", "scripting"],
+
+  "host_permissions": ["*://*.facebook.com/*"],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "MindScroll Settings"
+  }
+}
