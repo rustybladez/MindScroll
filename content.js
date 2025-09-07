@@ -15,6 +15,9 @@ class MindScrollFacebook {
     // Load session data
     await this.loadSessionData();
 
+    // Restart timer on each visit (do not touch lastVisitTime yet)
+    this.restartTimerForVisit();
+
     // Show purpose modal if this is a new session
     this.checkForNewSession();
 
@@ -28,6 +31,18 @@ class MindScrollFacebook {
         sendResponse({ success: true });
       }
     });
+  }
+
+  restartTimerForVisit() {
+    const now = Date.now();
+    chrome.storage.local.set({
+      sessionStart: now,
+      lastReminderTime: now,
+    });
+
+    if (!this.sessionData) this.sessionData = {};
+    this.sessionData.sessionStart = now;
+    this.sessionData.lastReminderTime = now;
   }
 
   async loadSessionData() {
